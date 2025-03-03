@@ -1,13 +1,13 @@
 # 🚀 pLogger SDK for logging to multiple Transports
 
 ## The features in the project:
-    - Creates application specific loggers (pLogger) which can create subloggers for specific Transports
+    - Creates application specific loggers (pLogger) which can create subloggers for specific transports
     - Consists of a Console and HTTP Logger by default
     - Configurability of the loggers. Configs to personalize the logs
     - Can change the formatters of the logs sent to the transports
     - can set Levels to the logs which act as a threshold for the levels to send
     - Can add enum based messages to standardize the log messages.
-    -Adds, updates, and appends static parameters to the logs.
+    - Adds, updates, and appends static parameters to the logs.
     - HTTP Logger:
         - Configurability to tune the http logs
         - Performs Batching to reduce the HTTP Requests overhead
