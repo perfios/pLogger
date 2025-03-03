@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es5",
+    "lib": [ "es2015", "dom"],
+    "outDir": "lib",
+    "allowJs": true,
+    "sourceMap": true,
+    "declaration": true
+  },
+  "files": ["src/index.ts"]
+}
