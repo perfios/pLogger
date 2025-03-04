@@ -1,6 +1,6 @@
 {
     "name": "plogger-sdk",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Typescript based frontend logging library compatible with multiple transports and JS/TS frameworks",
     "keywords": [
         "logger",
