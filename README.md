@@ -1,5 +1,11 @@
 # 🚀 pLogger SDK for logging to multiple Transports
 
+## Installation
+You can install the package via npm:
+```
+npm install plogger-sdk
+```
+
 ## The features in the project:
     - Creates application specific loggers (pLogger) which can create subloggers for specific transports
     - Consists of a Console and HTTP Logger by default
