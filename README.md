@@ -325,6 +325,7 @@ pLogger was designed to address common limitations in existing logging libraries
 | HTTP/Remote Logging | ✅ | ⚠️ | ✅ | ✅ | ⚠️ | ⚠️ | ✅ |
 | Named Loggers/Scopes | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ |
 | Custom Formatting | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Extensibility/Plugins | ✅ | ✅ | ⚠️ | ⚠️ | ✅ | ✅ | ✅ |
 | Static Parameters | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
 | Log Batching (HTTP) | ✅ | ❌ | ⚠️ | ✅ | ❌ | ⚠️ | ❌ |
 | Error Handling | ✅ | ✅ | ⚠️ | ✅ | ⚠️ | ✅ | ✅ |
