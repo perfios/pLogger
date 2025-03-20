@@ -1,56 +1,69 @@
 # 🚀 pLogger SDK for logging to multiple Transports
 
 ## Installation
+
 You can install the package via npm:
-```
+
+```bash
 npm install plogger-sdk
 ```
+## Key Features
 
-## The features in the project:
-    - Creates application specific loggers (pLogger) which can create subloggers for specific transports
-    - Consists of a Console and HTTP Logger by default
-    - Configurability of the loggers. Configs to personalize the logs
-    - Can change the formatters of the logs sent to the transports
-    - can set Levels to the logs which act as a threshold for the levels to send
-    - Can add enum based messages to standardize the log messages.
-    - Adds, updates, and appends static parameters to the logs.
-    - HTTP Logger:
-        - Configurability to tune the http logs
-        - Performs Batching to reduce the HTTP Requests overhead
-        - Can add a "highPriority" level for which the logs with higher level rank are sent directly to the server rather than the batch.
-        - Can opt to send browser cookies to the server or not in the HTTP request headers.
-        - Can set our own request headers before sending the logs to the server. This also means we can send JWT authentication tokens as well.
+- **Multiple Transport Methods**: Console and HTTP logging built-in
+- **Configurable Log Levels**: Six severity levels with customizable thresholds 
+- **HTTP Transport with Batching**: Reduce network overhead with intelligent log batching
+- **Retry Mechanism**: Automatically retry failed HTTP log transmissions
+- **Priority-based Transmission**: Send critical logs immediately
+- **Authentication Support**: Include auth tokens in HTTP headers
+- **Static Parameters**: Add, update, and append static data to all logs
+- **Performance Optimization**: Options to control stack trace collection
+- **Customizable Formatting**: Format logs to suit your needs
+## Comparison with Other JavaScript Logging Libraries
+
+pLogger was designed to address common limitations in existing logging libraries while providing unique capabilities for modern web applications.
+
+### Feature Comparison
+
+| Feature | pLogger | loglevel | Pino (Browser) | browser-bunyan | js-Logger | tslog | lumberjack |
+|---------|---------|----------|--------------|----------------|-----------|-------|-----------|
+| Browser Support | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Configurable Log Levels | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| HTTP/Remote Logging | ✅ | ⚠️ | ✅ | ✅ | ⚠️ | ⚠️ | ✅ |
+| Named Loggers/Scopes | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ |
+| Custom Formatting | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Extensibility/Plugins | ✅ | ✅ | ⚠️ | ⚠️ | ✅ | ✅ | ✅ |
+| Static Parameters | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
+| Log Batching (HTTP) | ✅ | ❌ | ⚠️ | ✅ | ❌ | ⚠️ | ❌ |
+| Error Handling | ✅ | ✅ | ⚠️ | ✅ | ⚠️ | ✅ | ✅ |
+| Stack Trace Preservation | ✅ | ✅ | ❌ | ⚠️ | ⚠️ | ✅ | ⚠️ |
+| Retry Mechanisms | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Authentication Support | ✅ | ❌ | ❌ | ⚠️ | ❌ | ❌ | ⚠️ |
+| High Priority Logging | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Framework Compatibility | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌* |
+| Performance Optimization | ✅ | ⚠️ | ⚠️ | ⚠️ | ⚠️ | ✅ | ❌ |
+| Size | Moderate | Very Small | Small | Small | Very Small | Moderate | Moderate |
+
+\* Only compatible with Angular
+<br>
+⚠️ Requires additional plugins or custom implementation
 
 
-This project has been created using **webpack-cli**, you can now also run
+### Why Choose pLogger?
 
-```
-npm install 
-```
+pLogger stands out with its combination of:
 
-to install all the dependencies used in this project
+1. **Advanced HTTP transport capabilities** including batching, retry logic, and priority-based transmission
+2. **Performance optimization options** with configurable stack trace collection
+3. **Comprehensive static parameter manipulation** for contextual logging
+4. **Built-in support for authentication** in HTTP logging
 
-```
-npm run serve
-```
-to test your project on the webpack server
+While smaller libraries like loglevel and js-Logger offer simplicity, and libraries like lumberjack provide framework-specific features, pLogger offers a balanced approach with advanced features needed for robust production applications.
 
+## Logger Configuration
 
-To get a minified file that you can import in your framework's(React, Angular, etc.) index.html,
+### Log Levels
 
-implement the command
-
-```
-npm run build: prod
-```
-
-to build the project. The `webpack.config.js` in this project is customized to automatically minify the code into a single file while creating a library entry point to import the logic from the .js file.
-
-## Loggers Functionalities and Methods
-
-### logLevels
-Denoted the levels nested in the logging library
-Log levels include (in decreasing order of priority rank):
+pLogger includes six log levels in decreasing order of severity:
  1. Critical
  2. Error
  3. Warn
@@ -58,30 +71,51 @@ Log levels include (in decreasing order of priority rank):
  5. Trace
  6. Debug
 
-### pLogger
-```
-pLogger({
-  name: string,
-  hideLogPositionForPerformance: boolean,
-  stackDepth: number,
-  minLevel: logLevel,
-  formatter: string
-  staticParams: Object
+### pLogger Configuration Options
+
+```ts
+const logger = new pLogger({
+  name: string,                          // Logger name/scope
+  hideLogPositionForPerformance: boolean, // Disable stack trace for better performance
+  stackDepth: number,                    // Configure stack trace depth
+  minLevel: logLevel,                    // Set minimum log level threshold
+  formatter: string,                     // Custom log format
+  staticParams: Object                   // Static parameters to include in all logs
 })
 ```
 
-### pLogger Config
-  - `name` : Add the name/scope for the specific logger, helps in differentiating from various application-specific loggers in the backend or console (depending on the transport).
-  - `hideLogPositionForPerformance` : Set to false to send logs without the log positions (file-path, file-name, etc.), to reduce performance loads on the request calls being sent.
-  - `stackDepth` : Denotes the level of the functions to consider in the stack trace call.
-  - `staticParams` : Takes user defined parameters in the form of an object and adds it in the log.
-  - `minLevel` : Add a default level to threshold the logs (logs with level lower than the minLevel will be sent, and won't be logger otherwise)
-  - `formatter` : Configures a formatter to generate a formatted log within the given format, upon giving no format uses a default formatter present in the library.
+#### Configuration Parameters:
+  - **name** : Add the name/scope for the specific logger, helps in differentiating from various application-specific loggers in the backend or console (depending on the transport).
+  - **hideLogPositionForPerformance** : Set to false to send logs without the log positions (file-path, file-name, etc.), to reduce performance loads on the request calls being sent.
+  - **stackDepth** : Denotes the level of the functions to consider in the stack trace call.
+  - **staticParams** : Takes user defined parameters in the form of an object and adds it in the log.
+  - **minLevel** : Add a default level to threshold the logs (logs with level lower than the minLevel will be sent, and won't be logger otherwise)
+  - **formatter** : Configures a formatter to generate a formatted log within the given format, upon giving no format uses a default formatter present in the library.
+
+
+### HTTP Logger Configuration
+
+```ts
+const httpLogger = new HttpLogger({ 
+  serverUrl: string,                     // URL to send logs to
+  batchOptions: {                        // Batching configuration
+    batchSize: number,                   // Maximum logs per batch
+    debounceTime: number                 // Maximum time to wait before sending
+  },
+  retryOptions: {                        // Retry configuration
+    maxRetries: number,                  // Maximum retry attempts
+    retryDelay: number                   // Delay between retries (ms)
+  },
+  highPriority: logLevel,                // Level at which to bypass batching
+  setCredentials: boolean,               // Include credentials (cookies)
+  showFormattedLog: boolean              // Show formatted logs in console
+})
+```
 
 ### pLogger Methods
   -`setLevel`:
   This sets the threshold of the levels where the log level with lower priority rank will not infer any logs.
-  ```
+  ```ts
   pLogger.setLevel(logLevel.<your-log-level>)
   ```
 
@@ -106,21 +140,21 @@ pLogger({
 
   To do this we use the `addHandler` method
 
-  ```
+  ```ts
   pLogger.addHandler(<your-logger>);
   ```
   Once the loggers are added to the pLogger via `addHandler`, all the logs are sent through the respective transports
 
   To remove the handlers, you can use the `removeHandler(<logger>)` method
 
-  ```
+  ```ts
   pLogger.removeHandler(<your-logger>);
   ```
 
   -`setlogEnums`:
   pLogger supports standardizing the messages sent to the logs using Enums as keys that map to respective messages.
   The Keys are defined as object literals in the format of...
-  ```
+  ```ts
   {
     key1: "key1",
     key2: "key2",
@@ -128,14 +162,14 @@ pLogger({
   }
   ```
   The function can be defined as...
-  ```
+  ```ts
   pLogger.setLogEnums(<your-object-with-keys-defined>)
   ```
 
   -`setEnumMessages`:
   Method to add the mapped messages from the keys added in `setLogEnums`.
   Object in the format of
-  ```
+  ```ts
   {
     key1: {field1: ..., field2: ...},
     key2: {field3: ..., field4: ...},
@@ -146,7 +180,7 @@ pLogger({
   Can be used to completly replace the old staticParams with new ones in the logger object
   
   For example
-  ```
+  ```ts
   //Let the staticParams be { key1: value1, key2: value2 }
 
   logger.updateParams({}) //This would make the staticParams as {}, useful for clearing the params
@@ -158,7 +192,7 @@ pLogger({
   Can be used to add(/append) new parameters in the staticParams and even override the preexisting param fields if added.
   Overriding happens only if the key added is the same as any of the pre-existing param keys, else a new key-value pair will be appended.
   For example
-  ```
+  ```ts
   //Let the staticParams be { key1: value1, key2: value2 }
 
   logger.appendParams({ key3: value3 }) //this will result in {key1:value1, key2:value2, key3:value3}
@@ -171,7 +205,7 @@ pLogger({
 
   - ***Logging Methods***:
   Consist of (In the decreasing order of logLevel rank)
-    ```
+    ```ts
     pLogger.critical(<message>) //logLevel.Critical
     pLogger.error(<message>) //logLevel.Error
     pLogger.warn(<message>) //logLevel.Warning
@@ -179,29 +213,6 @@ pLogger({
     pLogger.trace(<message>) //logLevel.Trace
     pLogger.debug(<message>) //logLevel.Debug
     ```
-
-### HttpLogger
-```
-HttpLogger({
-  serverUrl: string,
-  batchOptions: { batchSize: number, debounceTime: number },
-  retryOptions: { maxRetries: number, retryDelay: number },
-  highPriority: logLevel,
-  setCredentials: boolean,
-})
-```
-### HttpLogger Config
-
-  - `serverUrl` : Stores the server url that the logs are being sent to
-  - `batchOptions`: The parameters required to batch the logs. Consist of:
-    - `batchSize` : Denotes the maximum batch size to be taken
-    - `debounceTime` : The maximum time an incomplete batch is retained without being flushed to the serve
-  - `RetryOptions` : Provides options to retry sending logs to the server in-case of failure. Consists of:
-    - `maxRetries` : The number of times the request is meant to be retried
-    - `retryDelay` : The time (in ms) taken between each retry.
-  - `highPriority` : Takes the log level, and sets a threshold where any log with a log rank lower than the highPriority rank will be sent directly to the server, rather than being sent as batches.
-  - `setCredentials` : Upon setting to true, the `credentials` header is set to "include", meaning it can accept credential data like cookies and auth tokens (JWT) in the request headers, and on false, is set to "omit", not accepting any credential data.
-  - `showFormattedLog` : Upon setting to true, shows a pretty formatted log on each log set to the formatter in the pLogger config, set to False at default as it can often get harder to read with more informative logs. 
 
 ### HttpLogger Methods
 
@@ -216,7 +227,7 @@ HttpLogger({
 ### Example Code
 To create a logger object and send logs, the logic should be as follows
 
-```
+```ts
 ...
 
 import { ConsoleLogger } from "./console/console-logger";
@@ -311,21 +322,19 @@ logger.critical("this is a critical log");
 After minification, add the .js file into your angular project
 
 via browser
-```
+```ts
 <script src = 'path/to/file'> </script>
 ```
 
 then in angular.json (NOTW: this is for when the above approach doesn't work)
-```
-...
-"build":
-...
-scripts:
-[
-    "path/to/file"
-],
-
-...
+```json
+{
+    "build": {
+        "scripts":[
+            "path/to/file"
+        ]
+    }
+}
 ```
 Once imported, declare the library as 
 
@@ -336,10 +345,14 @@ and you can now import your logic components via the pLoggerSDK entry point!
 
 For e.g.,
 
-```
+```ts
 const logger = new pLoggerSDK.pLogger({
     ...
 })
-
+Comparison
 const logLevel = pLoggerSDK.logLevel
 ```
+
+## License
+
+This project is licensed under the GPL-3.0 License - see the LICENSE file for details.
