@@ -18,6 +18,46 @@ npm install plogger-sdk
 - **Static Parameters**: Add, update, and append static data to all logs
 - **Performance Optimization**: Options to control stack trace collection
 - **Customizable Formatting**: Format logs to suit your needs
+## Comparison with Other JavaScript Logging Libraries
+
+pLogger was designed to address common limitations in existing logging libraries while providing unique capabilities for modern web applications.
+
+### Feature Comparison
+
+| Feature | pLogger | loglevel | Pino (Browser) | browser-bunyan | js-Logger | tslog | lumberjack |
+|---------|---------|----------|--------------|----------------|-----------|-------|-----------|
+| Browser Support | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Configurable Log Levels | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| HTTP/Remote Logging | ✅ | ⚠️ | ✅ | ✅ | ⚠️ | ⚠️ | ✅ |
+| Named Loggers/Scopes | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ |
+| Custom Formatting | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Extensibility/Plugins | ✅ | ✅ | ⚠️ | ⚠️ | ✅ | ✅ | ✅ |
+| Static Parameters | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
+| Log Batching (HTTP) | ✅ | ❌ | ⚠️ | ✅ | ❌ | ⚠️ | ❌ |
+| Error Handling | ✅ | ✅ | ⚠️ | ✅ | ⚠️ | ✅ | ✅ |
+| Stack Trace Preservation | ✅ | ✅ | ❌ | ⚠️ | ⚠️ | ✅ | ⚠️ |
+| Retry Mechanisms | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Authentication Support | ✅ | ❌ | ❌ | ⚠️ | ❌ | ❌ | ⚠️ |
+| High Priority Logging | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Framework Compatibility | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌* |
+| Performance Optimization | ✅ | ⚠️ | ⚠️ | ⚠️ | ⚠️ | ✅ | ❌ |
+| Size | Moderate | Very Small | Small | Small | Very Small | Moderate | Moderate |
+
+\* Only compatible with Angular
+<br>
+⚠️ Requires additional plugins or custom implementation
+
+
+### Why Choose pLogger?
+
+pLogger stands out with its combination of:
+
+1. **Advanced HTTP transport capabilities** including batching, retry logic, and priority-based transmission
+2. **Performance optimization options** with configurable stack trace collection
+3. **Comprehensive static parameter manipulation** for contextual logging
+4. **Built-in support for authentication** in HTTP logging
+
+While smaller libraries like loglevel and js-Logger offer simplicity, and libraries like lumberjack provide framework-specific features, pLogger offers a balanced approach with advanced features needed for robust production applications.
 
 ## Logger Configuration
 
@@ -309,49 +349,9 @@ For e.g.,
 const logger = new pLoggerSDK.pLogger({
     ...
 })
-
+Comparison
 const logLevel = pLoggerSDK.logLevel
 ```
-## Comparison with Other JavaScript Logging Libraries
-
-pLogger was designed to address common limitations in existing logging libraries while providing unique capabilities for modern web applications.
-
-### Feature Comparison
-
-| Feature | pLogger | loglevel | Pino (Browser) | browser-bunyan | js-Logger | tslog | lumberjack |
-|---------|---------|----------|--------------|----------------|-----------|-------|-----------|
-| Browser Support | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Configurable Log Levels | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| HTTP/Remote Logging | ✅ | ⚠️ | ✅ | ✅ | ⚠️ | ⚠️ | ✅ |
-| Named Loggers/Scopes | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ |
-| Custom Formatting | ✅ | ⚠️ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Extensibility/Plugins | ✅ | ✅ | ⚠️ | ⚠️ | ✅ | ✅ | ✅ |
-| Static Parameters | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
-| Log Batching (HTTP) | ✅ | ❌ | ⚠️ | ✅ | ❌ | ⚠️ | ❌ |
-| Error Handling | ✅ | ✅ | ⚠️ | ✅ | ⚠️ | ✅ | ✅ |
-| Stack Trace Preservation | ✅ | ✅ | ❌ | ⚠️ | ⚠️ | ✅ | ⚠️ |
-| Retry Mechanisms | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Authentication Support | ✅ | ❌ | ❌ | ⚠️ | ❌ | ❌ | ⚠️ |
-| High Priority Logging | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Framework Compatibility | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌* |
-| Performance Optimization | ✅ | ⚠️ | ⚠️ | ⚠️ | ⚠️ | ✅ | ❌ |
-| Size | Moderate | Very Small | Small | Small | Very Small | Moderate | Moderate |
-
-\* Only compatible with Angular
-<br>
-⚠️ Requires additional plugins or custom implementation
-
-
-### Why Choose pLogger?
-
-pLogger stands out with its combination of:
-
-1. **Advanced HTTP transport capabilities** including batching, retry logic, and priority-based transmission
-2. **Performance optimization options** with configurable stack trace collection
-3. **Comprehensive static parameter manipulation** for contextual logging
-4. **Built-in support for authentication** in HTTP logging
-
-While smaller libraries like loglevel and js-Logger offer simplicity, and libraries like lumberjack provide framework-specific features, pLogger offers a balanced approach with advanced features needed for robust production applications.
 
 ## License
 
